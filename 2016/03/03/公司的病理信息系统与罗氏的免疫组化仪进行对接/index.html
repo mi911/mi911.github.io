@@ -1,0 +1,752 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="博客，文章," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="业务需求：医生要做免疫组化时是需要手动在免疫组化仪上输入一些信息的比如要什么病理号，切片号，染色项目。用户希望在我们系统直接和免疫组化仪对接，有个染色列表页面，用户只要点击下染色按钮就可以批量把这些信息传给仪器，进行染色，以此来减轻他们的工作量 工作中遇到的第一个大问题就是和罗氏公司的免疫组化仪进行对接，虽然折腾了一些时间，幸运的是最后到罗氏测试成功。做这个东西的主要问题是之前从来没有人做过，没人">
+<meta property="og:type" content="article">
+<meta property="og:title" content="公司的病理信息系统与罗氏的免疫组化仪进行对接">
+<meta property="og:url" content="http://yoursite.com/2016/03/03/公司的病理信息系统与罗氏的免疫组化仪进行对接/index.html">
+<meta property="og:site_name" content="时间或许会让曾经蒙上尘埃">
+<meta property="og:description" content="业务需求：医生要做免疫组化时是需要手动在免疫组化仪上输入一些信息的比如要什么病理号，切片号，染色项目。用户希望在我们系统直接和免疫组化仪对接，有个染色列表页面，用户只要点击下染色按钮就可以批量把这些信息传给仪器，进行染色，以此来减轻他们的工作量 工作中遇到的第一个大问题就是和罗氏公司的免疫组化仪进行对接，虽然折腾了一些时间，幸运的是最后到罗氏测试成功。做这个东西的主要问题是之前从来没有人做过，没人">
+<meta property="og:updated_time" content="2016-03-03T02:16:13.813Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="公司的病理信息系统与罗氏的免疫组化仪进行对接">
+<meta name="twitter:description" content="业务需求：医生要做免疫组化时是需要手动在免疫组化仪上输入一些信息的比如要什么病理号，切片号，染色项目。用户希望在我们系统直接和免疫组化仪对接，有个染色列表页面，用户只要点击下染色按钮就可以批量把这些信息传给仪器，进行染色，以此来减轻他们的工作量 工作中遇到的第一个大问题就是和罗氏公司的免疫组化仪进行对接，虽然折腾了一些时间，幸运的是最后到罗氏测试成功。做这个东西的主要问题是之前从来没有人做过，没人">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 公司的病理信息系统与罗氏的免疫组化仪进行对接 | 时间或许会让曾经蒙上尘埃 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">时间或许会让曾经蒙上尘埃</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">但却不会风化那些鲜活的记忆</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                公司的病理信息系统与罗氏的免疫组化仪进行对接
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-03-03T09:26:24+08:00" content="2016-03-03">
+              2016-03-03
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/blog/" itemprop="url" rel="index">
+                    <span itemprop="name">blog</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/03/03/公司的病理信息系统与罗氏的免疫组化仪进行对接/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/03/公司的病理信息系统与罗氏的免疫组化仪进行对接/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>业务需求：医生要做免疫组化时是需要手动在免疫组化仪上输入一些信息的比如要什么病理号，切片号，染色项目。用户希望在我们系统直接和免疫组化仪对接，有个染色列表页面，用户只要点击下染色按钮就可以批量把这些信息传给仪器，进行染色，以此来减轻他们的工作量<br> 工作中遇到的第一个大问题就是和罗氏公司的免疫组化仪进行对接，虽然折腾了一些时间，幸运的是最后到罗氏测试成功。做这个东西的主要问题是之前从来没有人做过，没人可以询问，网上的资料少的可怜。期间主要的时间放在了研究HL7消息格式和MLLP协议，中间因为不了解MLLP协议的原因出了很多问题，消息没发送成功。<br><a id="more"></a><br>简介</p>
+<blockquote>
+<p>要和遵循HL7格式的仪器进行对接，首先你得先搞清楚以下重要的几点：</p>
+</blockquote>
+<p>1：对接的仪器的通讯方式 TCP/IP 或者 UDP 或者其它 。</p>
+<p>2：对接的仪器接收的消息格式，返回的消息格式，因为HL7消息只是一个规范，各个医疗厂商不会完全遵循规范，只是向规范靠拢。（本身HL7也分为很多版本(v2.3,v2.4,v2.5…）所以你要产生仪器能够接收的HL7格式的消息，这些仪器才能读懂和返回消息给你，然后你要拿到返回给你的消息来判断仪器是否接收成功。（仪器返回的消息中如果包含MSA|AA|就代表成功，如果返回的消息包含MSA|AE|代表失败）。</p>
+<h2 id="HL7消息产生-有两种方式-一种直接拼字符串"><a href="#HL7消息产生-有两种方式-一种直接拼字符串" class="headerlink" title="HL7消息产生 有两种方式 一种直接拼字符串"></a>HL7消息产生 有两种方式 一种直接拼字符串</h2><figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">String msg = "MSH|^~\\&amp;|PIS|Lab||BenchMark|<span class="number">20151122103354</span>||OML^O21^OML_O<span class="number">21|000001</span>|p|2.4\r"</span><br><span class="line">				+ "ORC|NW|H13-0412\r"</span><br><span class="line">				+ "OBR|<span class="number">1|71662</span>-B||4899^Eber^STAIN||||||||||||||||H<span class="number">13-041209</span>"<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<h3 id="第二种通过HAPI"><a href="#第二种通过HAPI" class="headerlink" title="第二种通过HAPI"></a>第二种通过HAPI</h3> <figure class="highlight sml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>：首先翻墙<span class="type">GOOGLE</span>搜索<span class="type">HL7API</span>会看到<span class="type">HAPI</span>的官网，到上面把<span class="type">HAPI</span>的jar包下载下来导入到lib项目当中。</span><br><span class="line"></span><br><span class="line"><span class="number">2</span>：<span class="type">HL7</span>消息分为很多种类型 有<span class="type">ADT</span>，<span class="type">OML</span>, 首先得确定消息的类型</span><br><span class="line">   例如罗氏给我们的例子可以看到是<span class="type">OML</span>消息</span><br><span class="line">   <span class="type">MSH</span>|^~\&amp;|<span class="type">PIS</span>|<span class="type">Lab</span>||<span class="type">BenchMark</span>|<span class="number">20130704133213</span>||<span class="type">OML</span>^<span class="type">O21</span>|<span class="number">000001</span>|<span class="type">P</span>|<span class="number">2.4</span>|</span><br><span class="line">   <span class="type">ORC</span>|<span class="type">NW</span>|<span class="type">H13</span>-<span class="number">0412</span>|</span><br><span class="line">   <span class="type">OBR</span>|<span class="number">1</span>|<span class="number">71662</span>-<span class="type">B</span>||<span class="number">1</span>^<span class="type">Ki</span>-<span class="number">67</span>^<span class="type">STAIN</span>||||||||||||||||<span class="type">H13</span>-<span class="number">041209</span>|||</span><br><span class="line">   </span><br><span class="line"><span class="number">3</span>：导入包后</span><br><span class="line"></span><br><span class="line">  <span class="number">3.1</span>：给<span class="type">MSH</span>每个段赋值</span><br><span class="line">  首先拿到<span class="type">OML</span>对象 <span class="type">OML_O21</span> oml = new <span class="type">OML_O21</span><span class="literal">()</span>;</span><br><span class="line">  然后再利用<span class="type">OML</span>拿到<span class="type">MSH</span>  <span class="type">MSH</span> ms = oml.getMSH<span class="literal">()</span>; 然后在给<span class="type">MSH</span>的每个段去赋值ms.getSendingApplication<span class="literal">()</span>.getNamespaceID<span class="literal">()</span>.setValue(<span class="string">"PIS"</span>);.... 每个消息段<span class="type">HAPI</span>官网上都有详细的解释，可以去查看。</span><br><span class="line">  </span><br><span class="line"> <span class="number">3.2</span>：给<span class="type">ORC</span> 段赋值 首先得拿到<span class="type">ORC</span>对象</span><br><span class="line">           <span class="type">OML_O21</span> oml = new <span class="type">OML_O21</span><span class="literal">()</span>;</span><br><span class="line">           <span class="type">OML_O21_ORDER_GENERAL</span> or = oml.getORDER_GENERAL<span class="literal">()</span>;</span><br><span class="line">		<span class="type">OML_O21_ORDER</span> <span class="built_in">order</span> = or.getORDER<span class="literal">()</span>;</span><br><span class="line">		<span class="type">ORC</span> orc = <span class="built_in">order</span>.getORC<span class="literal">()</span>;</span><br><span class="line">   之后也是一样  每个段 一一赋值  但是有时候不能直接setValue 得查下他怎么设置</span><br><span class="line">   orc.getOrderControl<span class="literal">()</span>.setValue(<span class="string">"NW"</span>);</span><br><span class="line">   orc.getPlacerOrderNumber<span class="literal">()</span>.getEntityIdentifier<span class="literal">()</span>.setValue(<span class="string">"H13-0412"</span>);</span><br><span class="line">  </span><br><span class="line">  <span class="number">3.3</span>： 给<span class="type">OBR</span>段赋值：</span><br><span class="line">       <span class="type">OML_O21_ORDER_GENERAL</span> or = oml.getORDER_GENERAL<span class="literal">()</span>;</span><br><span class="line">	<span class="type">OML_O21_ORDER</span> <span class="built_in">order</span> = or.getORDER<span class="literal">()</span>;</span><br><span class="line">	<span class="type">OBR</span> obr = <span class="built_in">order</span>.getOBSERVATION_REQUEST<span class="literal">()</span>.getOBR<span class="literal">()</span>;</span><br><span class="line">	obr.getSetIDOBR<span class="literal">()</span>.setValue(<span class="string">"1"</span>);</span><br><span class="line">	obr.getPlacerOrderNumber<span class="literal">()</span>.getEntityIdentifier<span class="literal">()</span>.setValue(<span class="string">"71662-B"</span>);</span><br><span class="line">	obr.getUniversalServiceIdentifier<span class="literal">()</span>.getIdentifier<span class="literal">()</span>.setValue(<span class="string">"1^Ki-67^STAIN"</span>);</span><br><span class="line">	obr.getFillerField1<span class="literal">()</span>.setValue(<span class="string">"H13-041209"</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="HL7消息发送-SOCKET和HAPI两种方式"><a href="#HL7消息发送-SOCKET和HAPI两种方式" class="headerlink" title="HL7消息发送 SOCKET和HAPI两种方式"></a>HL7消息发送 SOCKET和HAPI两种方式</h2> <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">第一种通JAVA SOCKET发送 之前测试不成功的原因是因为没有使用MLLP协议 MLLP协议得翻墙GOOGLE上查看</span><br><span class="line">首先使用SOCKET发送必须要使用MLLP协议 所以得先研究MLLP</span><br><span class="line"></span><br><span class="line">即在 HL7 信息构造完成之后，需要将此包裹于 MLLP 之中，即使用 MLLP（Minimal Lower Layer Message Transport）协议进行传输。MLLP 是在 TCP/IP 协议之上的传输协议，它将消息内容进行封装，使用特殊字符作为传递给接收应用程序的启动和结束的信号。当使用 MLLP 时，基本上有三个字符组，它们分别是“起始块 (<span class="tag">&lt;<span class="title">SB</span>&gt;</span>)”，“结束块 (<span class="tag">&lt;<span class="title">EB</span>&gt;</span>)”和“段落分割符 (<span class="tag">&lt;<span class="title">CR</span>&gt;</span>)”。</span><br><span class="line"></span><br><span class="line">最后研究MLLP协议可知</span><br><span class="line">MLLP协议的一头两尾，本身是字符，查找他们对应的ASCII码的十进制值是11 28 13</span><br><span class="line"></span><br><span class="line">所以通过MLLP协议包裹起来之后仪器就知道了消息的开头消息的结尾 这样才能正常的手法数据</span><br><span class="line">下面把代码贴上来</span><br></pre></td></tr></table></figure>
+<pre><code>  <figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">  	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(<span class="keyword">String</span>[] args) &#123;</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		<span class="comment">// 1.建立客户端socket连接，指定服务器位置及端口</span></span><br><span class="line">		Socket socket = <span class="keyword">new</span> Socket(<span class="string">"localhost"</span>, <span class="number">51059</span>);</span><br><span class="line">		<span class="comment">// 2.得到socket读写流</span></span><br><span class="line">		OutputStream os = socket.getOutputStream();</span><br><span class="line">		PrintWriter pw = <span class="keyword">new</span> PrintWriter(os);</span><br><span class="line">		<span class="comment">// 输入流</span></span><br><span class="line">		InputStream is = socket.getInputStream();</span><br><span class="line">		<span class="keyword">BufferedReader</span> br = <span class="keyword">new</span> <span class="keyword">BufferedReader</span>(<span class="keyword">new</span> InputStreamReader(is,</span><br><span class="line">				<span class="string">"UTF-8"</span>));</span><br><span class="line">		<span class="comment">// 3.利用流按照一定的操作，对socket进行读写操作</span></span><br><span class="line">		<span class="comment">// String info="用户名：Tom,用户密码：123456";</span></span><br><span class="line">		<span class="comment">// String info = "1111";</span></span><br><span class="line">		<span class="keyword">String</span> info = <span class="string">"MSH|^~\\&amp;|PIS|Lab||BenchMark|20151122103354||OML^O21|000001|p|2.4\r"</span></span><br><span class="line">				+ <span class="string">"ORC|NW|H13-0412\r"</span></span><br><span class="line">				+ <span class="string">"OBR|1|71662-B||1\\S\\Ki-67\\S\\STAIN||||||||||||||||H13-041209"</span>;</span><br><span class="line">		<span class="built_in">char</span> cHeader = <span class="number">11</span>;</span><br><span class="line">		<span class="built_in">char</span> cTrail1 = <span class="number">28</span>;</span><br><span class="line">		<span class="built_in">char</span> cTrail2 = <span class="number">13</span>;</span><br><span class="line">		<span class="keyword">String</span> msg = cHeader + info + cTrail1 + cTrail2;</span><br><span class="line">		pw.write(msg);</span><br><span class="line">		pw.flush();</span><br><span class="line">		<span class="comment">// socket.shutdownOutput();</span></span><br><span class="line">		<span class="comment">// 接收服务器的相应</span></span><br><span class="line">		<span class="keyword">String</span> reply = <span class="string">""</span>;</span><br><span class="line">		<span class="keyword">while</span> ((reply = br.readLine()) != <span class="keyword">null</span>) &#123;</span><br><span class="line">			System.out.<span class="built_in">println</span>(<span class="string">"接收服务器的信息："</span> + reply);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">// 4.关闭资源</span></span><br><span class="line">		br.close();</span><br><span class="line">		is.close();</span><br><span class="line">		pw.close();</span><br><span class="line">		os.close();</span><br><span class="line">		socket.close();</span><br><span class="line"></span><br><span class="line">	&#125; <span class="keyword">catch</span> (UnknownHostException e) &#123;</span><br><span class="line">		e.printStackTrace();</span><br><span class="line">	&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">		e.printStackTrace();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+### 第二种通过HAPI HAPI的tcp/ip发送代码如下 把拼好的字符串通过HAPI发送出去
+
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(<span class="keyword">String</span>[] args) &#123;</span><br><span class="line">	<span class="keyword">String</span> msg = <span class="string">"MSH|^~\\&amp;|PIS|Lab||BenchMark|20151122103354||OML^O21^OML_O21|000001|p|2.4\r"</span></span><br><span class="line">			+ <span class="string">"ORC|NW|H13-0412\r"</span></span><br><span class="line">			+ <span class="string">"OBR|1|71662-B||4899^Eber^STAIN||||||||||||||||H13-041209"</span>;</span><br><span class="line">	HapiContext context = <span class="keyword">new</span> DefaultHapiContext();</span><br><span class="line">	Parser p = context.getPipeParser();</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		Message adt = p.parse(msg);</span><br><span class="line">		Connection connection = context.newClient(<span class="string">"localhost"</span>, <span class="number">51059</span>, <span class="keyword">false</span>);</span><br><span class="line">		Initiator initiator = connection.getInitiator();</span><br><span class="line">		Message response = initiator.sendAndReceive(adt);</span><br><span class="line">		<span class="keyword">String</span> str1 = response.getVersion();<span class="comment">//拿到返回消息的版本号</span></span><br><span class="line">		<span class="keyword">String</span> responseString = p.encode(response);</span><br><span class="line">		System.out.<span class="built_in">println</span>(<span class="string">"Received response:\n"</span> + responseString);<span class="comment">//接收到的消息</span></span><br><span class="line">		System.out.<span class="built_in">println</span>(str1);<span class="comment">//版本号</span></span><br><span class="line">		connection.close();</span><br><span class="line">	&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">		e.printStackTrace();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</code></pre><!--more-->
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/博客，文章/" rel="tag">#博客，文章</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/03/03/一个90后程序员的奋斗之路/" rel="prev" title="一个90后程序员的奋斗之路">
+                一个90后程序员的奋斗之路 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/03/03/公司的病理信息系统与罗氏的免疫组化仪进行对接/"
+           data-title="公司的病理信息系统与罗氏的免疫组化仪进行对接" data-url="http://yoursite.com/2016/03/03/公司的病理信息系统与罗氏的免疫组化仪进行对接/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xrbxx.com1.z0.glb.clouddn.com/524cfe0357757385.png!200x200.jpg"
+               alt="老街冷巷旧少年丶" />
+          <p class="site-author-name" itemprop="name">老街冷巷旧少年丶</p>
+          <p class="site-description motion-element" itemprop="description">时间或许会让曾经蒙上尘埃,但却不会风化那些鲜活的记忆</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">2</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+          
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#HL7消息产生-有两种方式-一种直接拼字符串"><span class="nav-number">1.</span> <span class="nav-text">HL7消息产生 有两种方式 一种直接拼字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#第二种通过HAPI"><span class="nav-number">1.1.</span> <span class="nav-text">第二种通过HAPI</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HL7消息发送-SOCKET和HAPI两种方式"><span class="nav-number">2.</span> <span class="nav-text">HL7消息发送 SOCKET和HAPI两种方式</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">老街冷巷旧少年丶</span>
+</div>
+
+<!-- 
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+-->
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  
+
+
+  
+
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=0.5.0"></script>
+
+
+
+  
+  
+<script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = NexT.utils.escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    NexT.motion.middleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+
+      if (CONFIG.scheme !== 'Pisces' && (CONFIG.sidebar.display === 'post' || CONFIG.sidebar.display === 'always')) {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          NexT.utils.displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"int"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+
+  
+  
+
+
+</body>
+</html>
